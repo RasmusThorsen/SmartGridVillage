@@ -18,8 +18,8 @@ namespace TradeInfoDB.Repositories
         private const string _endPointURL = "https://localhost:8081";
         private const string _primaryKey = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
 
-        private const string databaseName = "TradeInfoDB";
-        private const string collectionName = "TransactionWindowCollection";
+        private const string _databaseName = "TradeInfoDB";
+        private const string _collectionName = "TransactionWindowCollection";
 
         public TransactionWindowRepository()
         {
@@ -29,7 +29,11 @@ namespace TradeInfoDB.Repositories
 
         public IEnumerable<TransactionWindow> GetAll()
         {
-            throw new NotImplementedException();
+            IEnumerable<TransactionWindow> query =
+                _client.CreateDocumentQuery<TransactionWindow>(
+                    UriFactory.CreateDocumentCollectionUri(_databaseName, _collectionName)).ToList();
+
+            return query;
         }
 
 
@@ -43,9 +47,9 @@ namespace TradeInfoDB.Repositories
             try
             {
                 _client = new DocumentClient(new Uri(_endPointURL), _primaryKey);
-                _client.CreateDatabaseIfNotExistsAsync(new Database { Id = databaseName }).Wait();
-                await _client.CreateDocumentCollectionIfNotExistsAsync(UriFactory.CreateDatabaseUri(databaseName),
-                    new DocumentCollection {Id = collectionName});
+                _client.CreateDatabaseIfNotExistsAsync(new Database { Id = _databaseName }).Wait();
+                await _client.CreateDocumentCollectionIfNotExistsAsync(UriFactory.CreateDatabaseUri(_databaseName),
+                    new DocumentCollection {Id = _collectionName});
             }
             catch (DocumentClientException de)
             {
