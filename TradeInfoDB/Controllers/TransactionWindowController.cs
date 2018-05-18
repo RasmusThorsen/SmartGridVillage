@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 using TradeInfoDB.Models;
 using TradeInfoDB.Repositories;
 
@@ -20,9 +21,11 @@ namespace TradeInfoDB.Controllers
         }
 
         // GET: api/TransactionWindow/5
-        public string Get(int id)
+        [ResponseType(typeof(TransactionWindow))]
+        public IHttpActionResult Get(int id)
         {
-            return "value";
+            TransactionWindow transactionWindow = _repository.Get(id);
+            return transactionWindow == null ? (IHttpActionResult) NotFound() : Ok(transactionWindow);
         }
 
         // POST: api/TransactionWindow

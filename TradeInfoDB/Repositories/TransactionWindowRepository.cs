@@ -36,7 +36,16 @@ namespace TradeInfoDB.Repositories
             return query;
         }
 
+        public TransactionWindow Get(int id)
+        {
+            IEnumerable<TransactionWindow> query = _client
+                .CreateDocumentQuery<TransactionWindow>(
+                    UriFactory.CreateDocumentCollectionUri(_databaseName, _collectionName))
+                .Where(t => t.TransactionWindowId == id).ToList();
 
+            // Can return the first element in the query list, cause each ID must be unique.
+            return query.ToList()[0];
+        }
 
 
 
@@ -66,6 +75,7 @@ namespace TradeInfoDB.Repositories
                 Debug.WriteLine("Connection == true");
             }
         }
+
 
         
     }
