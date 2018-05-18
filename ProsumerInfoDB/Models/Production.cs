@@ -14,5 +14,6 @@ namespace ProsumerInfoDB.Models
         public int AverageProduction { get; set; }
         public int AverageConsumer { get; set; }
         public int Balance { get; set; }
+        public virtual List<EnergySource> EnergySources { get; set; }
     }
 }

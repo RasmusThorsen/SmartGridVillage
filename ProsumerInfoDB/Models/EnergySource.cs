@@ -10,7 +10,7 @@ namespace ProsumerInfoDB.Models
     public class EnergySource
     {
         [Key]
-        public int EnergyID { get; set; }
+        public int EnergySourceID { get; set; }
 
         public string Source { get; set; }
     }

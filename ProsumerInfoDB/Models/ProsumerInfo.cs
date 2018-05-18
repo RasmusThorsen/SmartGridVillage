@@ -12,9 +12,8 @@ namespace ProsumerInfoDB.Models
         [Key]
         public int ProsumerID { get; set; }
         public string Type { get; set; }
-        public Address Address { get; set; }
-        public Production Production { get; set; }
-        public Owner Owner { get; set; }
-        public EnergySource EnergySource { get; set; }
+        public virtual Address Address { get; set; }
+        public virtual Production Production { get; set; }
+        public virtual Owner Owner { get; set; }
     }
 }
