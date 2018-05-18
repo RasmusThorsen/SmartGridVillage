@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -23,32 +20,52 @@ namespace TradeInfoDB.Controllers
 
         // GET: api/TransactionWindow/5
         [ResponseType(typeof(TransactionWindow))]
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult Get(string id)
         {
             TransactionWindow transactionWindow = _repository.Get(id);
-            return transactionWindow == null ? (IHttpActionResult) NotFound() : Ok(transactionWindow);
+            return transactionWindow == null ? (IHttpActionResult)NotFound() : Ok(transactionWindow);
         }
 
         // POST: api/TransactionWindow
         [ResponseType(typeof(TransactionWindow))]
-        public IHttpActionResult Post(TransactionWindow newTransactionWindow)
+        public async Task<IHttpActionResult> Post(TransactionWindow newTransactionWindow)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
             _repository.Insert(newTransactionWindow);
 
-            return CreatedAtRoute("DefaultApi", new {id = newTransactionWindow.TransactionWindowId},
-                newTransactionWindow);
+            return CreatedAtRoute("DefaultApi", new { id = newTransactionWindow.TransactionWindowId }, newTransactionWindow);
         }
 
         // PUT: api/TransactionWindow/5
-        public void Put(int id, [FromBody]string value)
+        [ResponseType(typeof(void))]
+        public IHttpActionResult Put(string id, TransactionWindow newTransactionWindow)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (id != newTransactionWindow.TransactionWindowId)
+                return BadRequest();
+
+            _repository.ChangeDocument(id, newTransactionWindow);
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // DELETE: api/TransactionWindow/5
-        public void Delete(int id)
+        [ResponseType(typeof(void))]
+        public IHttpActionResult Delete(string id)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (_repository.Get(id) == null)
+                return NotFound();
+
+            _repository.Delete(id);
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
     }
 }
