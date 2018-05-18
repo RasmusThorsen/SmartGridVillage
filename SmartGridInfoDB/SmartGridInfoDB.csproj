@@ -202,10 +202,6 @@
     <Compile Include="Migrations\201805180822497_InitialCreate.Designer.cs">
       <DependentUpon>201805180822497_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201805180916011_dbadress.cs" />
-    <Compile Include="Migrations\201805180916011_dbadress.Designer.cs">
-      <DependentUpon>201805180916011_dbadress.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Adress.cs" />
     <Compile Include="Models\SmartGridInfo.cs" />
@@ -287,9 +283,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201805180822497_InitialCreate.resx">
       <DependentUpon>201805180822497_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805180916011_dbadress.resx">
-      <DependentUpon>201805180916011_dbadress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
