@@ -3,7 +3,7 @@ namespace ProsumerInfoDB.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initialDB : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -67,9 +67,9 @@ namespace ProsumerInfoDB.Migrations
                         Production_ProductionID = c.Int(),
                     })
                 .PrimaryKey(t => t.ProsumerID)
-                .ForeignKey("dbo.Addresses", t => t.Address_AddressId)
-                .ForeignKey("dbo.Owners", t => t.Owner_OwnerID)
-                .ForeignKey("dbo.Productions", t => t.Production_ProductionID)
+                .ForeignKey("dbo.Addresses", t => t.Address_AddressId, cascadeDelete: true)
+                .ForeignKey("dbo.Owners", t => t.Owner_OwnerID, cascadeDelete: true)
+                .ForeignKey("dbo.Productions", t => t.Production_ProductionID, cascadeDelete: true)
                 .Index(t => t.Address_AddressId)
                 .Index(t => t.Owner_OwnerID)
                 .Index(t => t.Production_ProductionID);

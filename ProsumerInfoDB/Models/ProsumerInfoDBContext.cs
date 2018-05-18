@@ -28,5 +28,7 @@ namespace ProsumerInfoDB.Models
         public System.Data.Entity.DbSet<ProsumerInfoDB.Models.EnergySource> EnergySources { get; set; }
 
         public System.Data.Entity.DbSet<ProsumerInfoDB.Models.ProsumerInfo> ProsumerInfoes { get; set; }
+
+        
     }
 }

@@ -39,17 +39,51 @@ namespace ProsumerInfoDB.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutProsumerInfo(int id, ProsumerInfo prosumerInfo)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (id != prosumerInfo.ProsumerID)
             {
                 return BadRequest();
             }
 
-            db.Entry(prosumerInfo).State = EntityState.Modified;
+            ProsumerInfo prosumer = db.ProsumerInfoes.Find(id);
+            
+            //For Prosumer
+            prosumer.Type = prosumerInfo.Type;
+
+            //Prosumer Address
+            prosumer.Address.Street = prosumerInfo.Address.Street;
+            prosumer.Address.City = prosumerInfo.Address.City;
+            prosumer.Address.Country = prosumerInfo.Address.Country;
+            prosumer.Address.ZipCode = prosumerInfo.Address.ZipCode;
+            prosumer.Address.HouseNumber = prosumerInfo.Address.HouseNumber;
+
+            //Prosumer Owner
+            prosumer.Owner.FirstName = prosumerInfo.Owner.FirstName;
+            prosumer.Owner.MiddleName = prosumerInfo.Owner.MiddleName;
+            prosumer.Owner.LastName = prosumerInfo.Owner.LastName;
+            prosumer.Owner.Email = prosumerInfo.Owner.Email;
+            prosumer.Owner.PhoneNumber = prosumerInfo.Owner.PhoneNumber;
+
+            //Prosumer Production
+            prosumer.Production.AverageProduction = prosumerInfo.Production.AverageProduction;
+            prosumer.Production.AverageConsumer = prosumerInfo.Production.AverageConsumer;
+            prosumer.Production.Balance = prosumerInfo.Production.Balance;
+
+            for (int i = 0; i < prosumer.Production.EnergySources.Count; i++)
+            {
+                prosumer.Production.EnergySources[i].Source = prosumerInfo.Production.EnergySources[i].Source;
+            }
+
+            //Prosumer Production Energysources
+            if (prosumer.Production.EnergySources.Count != prosumerInfo.Production.EnergySources.Count)
+            {
+                for (int i = prosumer.Production.EnergySources.Count; i < prosumerInfo.Production.EnergySources.Count; i++)
+                {
+                    prosumer.Production.EnergySources.Add(new EnergySource()
+                    {
+                        Source = prosumerInfo.Production.EnergySources[i].Source
+                    });
+                }
+            }
 
             try
             {
@@ -95,7 +129,12 @@ namespace ProsumerInfoDB.Controllers
                 return NotFound();
             }
 
+            db.Owners.Remove(prosumerInfo.Owner);
+            db.EnergySources.RemoveRange(prosumerInfo.Production.EnergySources);
+            db.Productions.Remove(prosumerInfo.Production);
+            db.Addresses.Remove(prosumerInfo.Address);
             db.ProsumerInfoes.Remove(prosumerInfo);
+            
             db.SaveChanges();
 
             return Ok(prosumerInfo);
