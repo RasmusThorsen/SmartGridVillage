@@ -9,12 +9,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5B25C45A-BD70-4533-B538-20F442144153}</ProjectGuid>
+    <ProjectGuid>{7A6B22ED-E6E9-41A5-9A64-CB300B6AB915}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SmartGridInfoDB</RootNamespace>
-    <AssemblyName>SmartGridInfoDB</AssemblyName>
+    <RootNamespace>ProsumerInfoDB</RootNamespace>
+    <AssemblyName>ProsumerInfoDB</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -70,9 +70,6 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Http">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -94,6 +91,9 @@
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
@@ -191,25 +191,25 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SmartGridInfoesController.cs" />
-    <Compile Include="Controllers\SmartMetersController.cs" />
-    <Compile Include="Controllers\StorageInfoesController.cs" />
-    <Compile Include="Controllers\WireInfoesController.cs" />
+    <Compile Include="Controllers\ProsumerInfoesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201805180822497_InitialCreate.cs" />
-    <Compile Include="Migrations\201805180822497_InitialCreate.Designer.cs">
-      <DependentUpon>201805180822497_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201805181228048_initial.cs" />
+    <Compile Include="Migrations\201805181228048_initial.Designer.cs">
+      <DependentUpon>201805181228048_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805181239015_UpdateToOnModel.cs" />
+    <Compile Include="Migrations\201805181239015_UpdateToOnModel.Designer.cs">
+      <DependentUpon>201805181239015_UpdateToOnModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Adress.cs" />
-    <Compile Include="Models\SmartGridInfo.cs" />
-    <Compile Include="Models\SmartGridInfoDBContext.cs" />
-    <Compile Include="Models\SmartMeter.cs" />
-    <Compile Include="Models\SmartMeterDTO.cs" />
-    <Compile Include="Models\StorageInfo.cs" />
-    <Compile Include="Models\WireInfo.cs" />
+    <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\EnergySource.cs" />
+    <Compile Include="Models\Owner.cs" />
+    <Compile Include="Models\Production.cs" />
+    <Compile Include="Models\ProsumerInfo.cs" />
+    <Compile Include="Models\ProsumerInfoDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -281,8 +281,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201805180822497_InitialCreate.resx">
-      <DependentUpon>201805180822497_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201805181228048_initial.resx">
+      <DependentUpon>201805181228048_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805181239015_UpdateToOnModel.resx">
+      <DependentUpon>201805181239015_UpdateToOnModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -299,11 +302,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>51386</DevelopmentServerPort>
+          <DevelopmentServerPort>25504</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51386/</IISUrl>
+          <IISUrl>http://localhost:25504/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
