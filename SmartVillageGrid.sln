@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartGridInfoDB", "SmartGri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProsumerInfoDB", "ProsumerInfoDB\ProsumerInfoDB.csproj", "{7A6B22ED-E6E9-41A5-9A64-CB300B6AB915}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeInfoDB", "TradeInfoDB\TradeInfoDB.csproj", "{516ABB83-FEAF-4CDB-987F-489B3EB865EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7A6B22ED-E6E9-41A5-9A64-CB300B6AB915}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A6B22ED-E6E9-41A5-9A64-CB300B6AB915}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A6B22ED-E6E9-41A5-9A64-CB300B6AB915}.Release|Any CPU.Build.0 = Release|Any CPU
+		{516ABB83-FEAF-4CDB-987F-489B3EB865EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{516ABB83-FEAF-4CDB-987F-489B3EB865EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{516ABB83-FEAF-4CDB-987F-489B3EB865EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{516ABB83-FEAF-4CDB-987F-489B3EB865EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
