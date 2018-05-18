@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Web;
-using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
-using Newtonsoft.Json;
 using TradeInfoDB.Models;
 
 namespace TradeInfoDB.Repositories
@@ -15,7 +12,7 @@ namespace TradeInfoDB.Repositories
     public class TransactionWindowRepository
     {
         private DocumentClient _client;
-        private const string _endPointURL = "https://localhost:8081";
+        private const string _endPointUrl = "https://localhost:54095";
         private const string _primaryKey = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
 
         private const string _databaseName = "TradeInfoDB";
@@ -47,7 +44,19 @@ namespace TradeInfoDB.Repositories
             return query.ToList()[0];
         }
 
-
+        public async void Insert(TransactionWindow newTransactionWindow)
+        {
+            try
+            {
+                await _client.CreateDocumentAsync(
+                    UriFactory.CreateDocumentCollectionUri(_databaseName, _collectionName),
+                    newTransactionWindow);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Cant insert new Transaction Window: " + e.Message);
+            }
+        }
 
 
 
@@ -55,7 +64,7 @@ namespace TradeInfoDB.Repositories
         {
             try
             {
-                _client = new DocumentClient(new Uri(_endPointURL), _primaryKey);
+                _client = new DocumentClient(new Uri(_endPointUrl), _primaryKey);
                 _client.CreateDatabaseIfNotExistsAsync(new Database { Id = _databaseName }).Wait();
                 await _client.CreateDocumentCollectionIfNotExistsAsync(UriFactory.CreateDatabaseUri(_databaseName),
                     new DocumentCollection {Id = _collectionName});

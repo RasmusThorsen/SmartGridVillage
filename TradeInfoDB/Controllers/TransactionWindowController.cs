@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using TradeInfoDB.Models;
@@ -29,8 +30,13 @@ namespace TradeInfoDB.Controllers
         }
 
         // POST: api/TransactionWindow
-        public void Post([FromBody]string value)
+        [ResponseType(typeof(TransactionWindow))]
+        public IHttpActionResult Post(TransactionWindow newTransactionWindow)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            _repository.Insert(newTransactionWindow);
+            return CreatedAtRoute("DefaultApi", new {id = newTransactionWindow.TransactionWindowId},
+                newTransactionWindow);
         }
 
         // PUT: api/TransactionWindow/5
