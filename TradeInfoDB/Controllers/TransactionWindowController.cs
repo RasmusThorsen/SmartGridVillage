@@ -34,7 +34,9 @@ namespace TradeInfoDB.Controllers
         public IHttpActionResult Post(TransactionWindow newTransactionWindow)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
+
             _repository.Insert(newTransactionWindow);
+
             return CreatedAtRoute("DefaultApi", new {id = newTransactionWindow.TransactionWindowId},
                 newTransactionWindow);
         }

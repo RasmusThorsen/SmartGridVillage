@@ -12,7 +12,7 @@ namespace TradeInfoDB.Repositories
     public class TransactionWindowRepository
     {
         private DocumentClient _client;
-        private const string _endPointUrl = "https://localhost:54095";
+        private const string _endPointUrl = "https://localhost:8081";
         private const string _primaryKey = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
 
         private const string _databaseName = "TradeInfoDB";
