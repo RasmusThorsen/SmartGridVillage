@@ -9,12 +9,17 @@ namespace TradeInfoDB.Models
     public class TransactionWindow
     {
         [JsonProperty(PropertyName = "id")] 
-        public int TransactionWindowId { get; set; }
+        public string TransactionWindowId { get; set; }
 
-        public DateTime TransactionStartTime { get; set; }
-        public DateTime TransactionEndTime { get; set; }
+        public string TransactionStartTime { get; set; }
+        public int TransactionEndTime { get; set; }
         public double CurrentTokenValue { get; set; }
         public TransactionDetails ExpectedTransactions { get; set; }
-        public TransactionDetails ActualTransactions { get; set; }
+        public TransactionDetails ActualTransactions { get; set; }  
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }

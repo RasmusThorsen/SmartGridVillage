@@ -12,16 +12,15 @@ namespace TradeInfoDB.Repositories
     public class TransactionWindowRepository
     {
         private DocumentClient _client;
-        private const string _endPointUrl = "https://localhost:8081";
-        private const string _primaryKey = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
+        private const string _endPointUrl = "https://f18i4dab.documents.azure.com:443/";
+        private const string _primaryKey = "vmbfFVnIqKYcdYCVRqHXDpkqh471dqeELczO4rbVKoYpI5NUJ4D34DegxTFTS4FhNiCw6B477WVqhjqNABSdow==";
 
-        private const string _databaseName = "TradeInfoDB";
+        private const string _databaseName = "F18I4DABH4Gr1";
         private const string _collectionName = "TransactionWindowCollection";
 
         public TransactionWindowRepository()
         {
-            var connectTask = Connect();
-            Task.WaitAll(connectTask);
+            Connect();
         }
 
         public IEnumerable<TransactionWindow> GetAll()
@@ -33,7 +32,7 @@ namespace TradeInfoDB.Repositories
             return query;
         }
 
-        public TransactionWindow Get(int id)
+        public TransactionWindow Get(string id)
         {
             IEnumerable<TransactionWindow> query = _client
                 .CreateDocumentQuery<TransactionWindow>(
@@ -44,30 +43,51 @@ namespace TradeInfoDB.Repositories
             return query.ToList()[0];
         }
 
-        public async void Insert(TransactionWindow newTransactionWindow)
+        public void Insert(TransactionWindow transactionWindow)
         {
             try
             {
-                await _client.CreateDocumentAsync(
-                    UriFactory.CreateDocumentCollectionUri(_databaseName, _collectionName),
-                    newTransactionWindow);
+                _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(_databaseName, _collectionName), transactionWindow).Wait();
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Cant insert new Transaction Window: " + e.Message);
+                Debug.WriteLine("Cant insert new person: " + e.Message);
             }
         }
 
-
-
-        public async Task Connect()
+        public void ChangeDocument(string id, TransactionWindow newTransactionWindow)
         {
             try
             {
-                _client = new DocumentClient(new Uri(_endPointUrl), _primaryKey);
-                _client.CreateDatabaseIfNotExistsAsync(new Database { Id = _databaseName }).Wait();
-                await _client.CreateDocumentCollectionIfNotExistsAsync(UriFactory.CreateDatabaseUri(_databaseName),
-                    new DocumentCollection {Id = _collectionName});
+                _client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(_databaseName, _collectionName, id), newTransactionWindow).Wait();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Cant find document with ID: " + e.Message);
+            }
+            
+        }
+
+        public void Delete(string id)
+        {
+            try
+            {
+                _client.DeleteDocumentAsync(UriFactory.CreateDocumentUri(_databaseName, _collectionName, id)).Wait();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Cant delete document with ID: " + e.Message);
+            }
+        }
+
+        public void Connect()
+        {
+            try
+            {
+                this._client = new DocumentClient(new Uri(_endPointUrl), _primaryKey);
+                this._client.CreateDatabaseIfNotExistsAsync(new Database { Id = _databaseName }).Wait();
+                this._client.CreateDocumentCollectionIfNotExistsAsync(UriFactory.CreateDatabaseUri(_databaseName),
+                    new DocumentCollection { Id = _collectionName }).Wait();
             }
             catch (DocumentClientException de)
             {
