@@ -15,7 +15,7 @@ namespace ProsumerInfoDB.Models
         // For more information refer to the documentation:
         // http://msdn.microsoft.com/en-us/data/jj591621.aspx
     
-        public ProsumerInfoDBContext() : base("name=ProsumerInfoDBContext")
+        public ProsumerInfoDBContext() : base("name=ProsumerInfoProduction")
         {
         }
 
